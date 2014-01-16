@@ -369,6 +369,8 @@ video {
   animation-name: nc-toaster-pop;
   animation-fill-mode: forwards;
   animation-iteration-count: 1;
+  /* Wait for .nc-tab-pulse to finish animating. */
+  animation-delay: 1500ms;
 }
 
 @keyframes nc-toaster-push {
@@ -381,7 +383,7 @@ video {
 }
 
 .nc-toaster-push {
-  animation-duration: 300ms;
+  animation-duration: 500ms;
   animation-name: nc-toaster-push;
   animation-fill-mode: forwards;
   animation-iteration-count: 1;

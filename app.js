@@ -182,11 +182,9 @@ var ncToastAnimationends = filter(animationends, function (event) {
 });
 
 add(beginAnimation, function () {
-  ncTabEl.classList.add('nc-tab-pulse');
-});
-
-add(ncTabAnimationends, function (event) {
+  ncToasterEl.classList.remove('nc-toaster-push');
   ncToasterEl.classList.add('nc-toaster-pop');
+  ncTabEl.classList.add('nc-tab-pulse');
 });
 
 add(ncToasterAnimationends, function (event) {
