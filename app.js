@@ -144,6 +144,13 @@ function withTarget(element) {
   return isElementTarget;
 }
 
+function withAnimation(target, animationName) {
+  function isEventForAnimation(event) {
+    return event.target === target && event.animationName === animationName;
+  }
+  return isEventForAnimation;
+}
+
 function getFirstWithoutClass(elements, c) {
   for (var i = 0; i < elements.length; i += 1)
     if (!elements[i].classList.contains(c)) return elements[i];
@@ -166,8 +173,8 @@ var ncToast2 = document.getElementById("nc-toast-0002");
 
 var beginAnimation = on(window, 'click');
 var animationends = on(window, 'animationend');
-var ncTabAnimationends = filter(animationends, withTarget(ncTabEl));
-var ncToasterAnimationends = filter(animationends, withTarget(ncToasterEl));
+var ncTabAnimationends = filter(animationends, withAnimation(ncTabEl, 'nc-tab-pulse'));
+var ncToasterAnimationends = filter(animationends, withAnimation(ncToasterEl, 'nc-toaster-pop'));
 
 // All animationend events happening on toasts.
 var ncToastAnimationends = filter(animationends, function (event) {
@@ -186,12 +193,15 @@ add(ncTabAnimationends, function (event) {
 });
 
 add(ncToasterAnimationends, function (event) {
-  ncTabEl.classList.remove('nc-tab-pulsed');
   ncToasterEl.classList.add('nc-toaster-popped');
   ncToasterEl.classList.remove('nc-toaster-pop');
   toastNext_(ncToasterEl.children);
 });
 
 add(ncToastAnimationends, function (event) {
-  toastNext_(ncToasterEl.children);
+  var toastedEl = toastNext_(ncToasterEl.children);
+  if (toastedEl === null) {
+    ncToasterEl.classList.add('nc-toaster-push');
+    ncToasterEl.classList.remove('nc-toaster-popped');
+  }
 });

@@ -345,7 +345,6 @@ video {
 .nc-drawer {
   background: #009cb8;
   color: #fff;
-  z-index: 
 }
 
 .nc-toaster {
@@ -378,6 +377,22 @@ video {
 
 .nc-toaster-popped {
   transform: translateY(-45px);
+}
+
+@keyframes nc-toaster-push {
+  0% {
+    transform: translateY(-45px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.nc-toaster-push {
+  animation-duration: 300ms;
+  animation-name: nc-toaster-push;
+  animation-iteration-count: 1;
+  transform: translateY(0);
 }
 
 .nc-toast {
@@ -426,3 +441,4 @@ video {
   animation-name: nc-fade-in-out;
   animation-iteration-count: 1;
 }
+
