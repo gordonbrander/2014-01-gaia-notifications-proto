@@ -1,0 +1,428 @@
+/* Global
+----------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url("FiraSansOT-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url("FiraSansOT-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url("FiraSansOT-Bold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scale-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+html {
+  background: #000;
+  color: #fff;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+html,
+body {
+  /* Make sure the body covers the viewport. */
+  height: 100%;
+}
+
+body {
+  perspective: 100px;
+}
+
+/* Remove the gap between images, videos, audio and canvas and the bottom of
+their containers: h5bp.com/i/440 */
+audio,
+canvas,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/* Utility
+----------------------------------------------------------------------------- */
+
+.ir {
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  display: block;
+  text-indent: -999em;
+}
+
+.js-hide {
+  display: none;
+}
+
+/* JS class for disabling CSS transitions while animating an element via CSS. */
+.js-transition {
+  transition: none !important;
+}
+
+/* System .sys-
+----------------------------------------------------------------------------- */
+
+.sys-screen {
+  height: 480px;
+  /* Disable scrollbars. */
+  overflow: hidden;
+  position: absolute;
+  width: 320px;
+}
+
+/* Hot area for bottom swipes */
+#sys-gesture-panel-bottom {
+  border-radius: 50% 50% 0 0;
+  bottom: 0;
+  height: 35px;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Use with .ir */
+.sys-fake-keyboard {
+  background-image: url(keyboard.png);
+  background-size: 320px auto;
+  bottom: 0;
+  height: 205px;
+  left: 0;
+  position: absolute;
+  transition: transform 200ms ease-out;
+  transform: translateY(205px);
+  width: 320px;
+  z-index: 999;
+}
+.js-ready .sys-fake-keyboard {
+  display: block;
+}
+.sys-fake-keyboard.js-activated {
+  transform: translateY(0);
+}
+
+/* General class for overlays */
+.sys-overlay {
+  background: rgba(0, 0, 0, .5);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/* RocketBar .rb-
+----------------------------------------------------------------------------- */
+
+.rb-rocketbar {
+  /* Preload background image without showing it */
+  background: rgba(0, 0, 0, 0.5);
+  height: 20px;
+  left: 0;
+  /* Contains absolute elements */
+  position: absolute;
+  width: 320px;
+  transition: height 200ms linear;
+  right: 0;
+  top: 0;
+  z-index: 501;
+}
+
+.rb-input {
+  color: #fff;
+}
+
+.rb-min > .rb-input {
+  background: url(rb-search-min.png) no-repeat 0 0;
+  color: #ddd;
+  font-size: 12.6px;
+  padding-left: 22px;
+}
+
+/* Include .ir with the element. */
+.rb-icons {
+  background-image: url(rb-icons.png);
+  background-size: auto 20px;
+  height: 20px;
+  opacity: 1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: opacity 200ms linear;
+  width: 106px;
+}
+
+.rb-rocketbar.js-expanded .rb-icons,
+.rb-clear {
+  display: none;
+}
+
+.rb-cancel {
+  height: 50px;
+  line-height: 50px;
+  position: absolute;
+  right: 5px;
+}
+
+#rb-overlay {
+  z-index: 500;
+}
+
+/* Settings drawer .set-
+----------------------------------------------------------------------------- */
+
+/* Use with .ir */
+.set-settings {
+  background-image: url(settings-drawer.png);
+  background-size: 320px auto;
+  height: 389px;
+  left: 0;
+  position: absolute;
+  top: 20px;
+  width: 320px;
+  z-index: 400;
+}
+
+#set-overlay {
+  z-index: 399;
+}
+
+/* Launcher homescreen .hs-
+----------------------------------------------------------------------------- */
+
+.hs-homescreen {
+  background-size: 320px;
+  height: 480px;
+  position: absolute;
+  top: 0;
+  width: 320px;
+  z-index: 1;
+}
+
+/* Task manager .tm-
+----------------------------------------------------------------------------- */
+
+.tm-task-manager {
+  background: #484848;
+  height: 460px;
+  /* We have to give task manager perspective because as an absolute element
+  with z-index, it has a new stacking context 
+  See: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context */
+  perspective: 100px;
+  position: absolute;
+  top: 20px;
+  width: 320px;
+  z-index: 200;
+}
+
+/* Sheets .sh-
+----------------------------------------------------------------------------- */
+
+.sh-sheet {
+  height: 460px;
+  position: absolute;
+  top: 0;
+  transition: transform 200ms linear;
+  width: 320px;
+  z-index: 300;
+}
+
+.sh-frame {
+  height: 460px;
+  overflow: auto;
+  width: 320px;
+}
+
+.sh-scaled {
+  transform: translateZ(-40px);
+}
+
+/* Transparent cover over sheet that is hidden when zoomed in. */
+.sh-cover {
+  display: none;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/* Cover sheet when scaled (task manager mode). */
+.sh-scaled > .sh-cover {
+  display: block;
+}
+
+/* nc-notifications .not-
+----------------------------------------------------------------------------- */
+
+/* The small nubbin that glows at the bottom */
+.nc-tab {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px 3px 0 0;
+  bottom: 0;
+  height: 3px;
+  left: 0;
+  /* Required to horizontally center element */
+  margin: auto;
+  position: absolute;
+  right: 0;
+  width: 86px;
+  z-index: 200;
+}
+
+@keyframes nc-tab-pulse {
+  0% {
+    border-radius: 3px 3px 0 0;
+  }
+  33% {
+    background: #4bf3dc;
+    width: 86px;
+  }
+  80% {
+    background: #008eab;
+    border-radius: 3px 3px 0 0;
+    width: 86px;
+  }
+  100% {
+    background: #008eab;
+    border-radius: 0;
+    width: 100%;
+  }
+}
+
+/* Animation class for tab */
+.nc-tab-pulse {
+  animation-duration: 1500ms;
+  animation-name: nc-tab-pulse;
+  animation-iteration-count: 1;
+}
+
+.nc-tab-pulsed {
+  background: #008eab;
+  border-radius: 0;
+  width: 100%;
+}
+
+.nc-drawer {
+  background: #009cb8;
+  color: #fff;
+  z-index: 
+}
+
+.nc-toaster {
+  background: #008eab;
+  bottom: -50px;
+  height: 50px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: 200;
+}
+
+@keyframes nc-toaster-pop {
+  0% {
+    transform: translateY(0);
+  }
+  70% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(-45px);
+  }
+}
+
+.nc-toaster-pop {
+  animation-duration: 800ms;
+  animation-name: nc-toaster-pop;
+  animation-iteration-count: 1;
+}
+
+.nc-toaster-popped {
+  transform: translateY(-45px);
+}
+
+.nc-toast {
+  background: #008eab;
+  font-size: 13.75px;
+  height: 23px;
+  left: 0;
+  line-height: 23px;
+  /* Toasts start and end at opacity 0 */
+  opacity: 0;
+  padding: 12px 10px 10px 56px;
+  position: absolute;
+  right: 0;
+}
+
+.nc-toast-title {
+  font-size: 18.33px;
+}
+
+.nc-toast-sms {
+  background: #008eab url(toast-sms.png) 16px 10px no-repeat;
+}
+
+.nc-toast-nc {
+  background: #008eab url(toast-nc.png) 16px 10px no-repeat;
+}
+
+/* 3s total */
+@keyframes nc-fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.nc-toasted {
+  animation-duration: 2000ms;
+  animation-name: nc-fade-in-out;
+  animation-iteration-count: 1;
+}
