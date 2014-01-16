@@ -182,19 +182,14 @@ var ncToastAnimationends = filter(animationends, function (event) {
 });
 
 add(beginAnimation, function () {
-  ncTabEl.classList.remove('nc-tab-pulsed');
   ncTabEl.classList.add('nc-tab-pulse');
 });
 
 add(ncTabAnimationends, function (event) {
-  ncTabEl.classList.add('nc-tab-pulsed');
-  ncTabEl.classList.remove('nc-tab-pulse');
   ncToasterEl.classList.add('nc-toaster-pop');
 });
 
 add(ncToasterAnimationends, function (event) {
-  ncToasterEl.classList.add('nc-toaster-popped');
-  ncToasterEl.classList.remove('nc-toaster-pop');
   toastNext_(ncToasterEl.children);
 });
 
@@ -202,6 +197,6 @@ add(ncToastAnimationends, function (event) {
   var toastedEl = toastNext_(ncToasterEl.children);
   if (toastedEl === null) {
     ncToasterEl.classList.add('nc-toaster-push');
-    ncToasterEl.classList.remove('nc-toaster-popped');
+    ncToasterEl.classList.remove('nc-toaster-pop');
   }
 });

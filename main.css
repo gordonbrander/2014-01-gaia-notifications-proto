@@ -334,12 +334,7 @@ video {
   animation-duration: 1500ms;
   animation-name: nc-tab-pulse;
   animation-iteration-count: 1;
-}
-
-.nc-tab-pulsed {
-  background: #008eab;
-  border-radius: 0;
-  width: 100%;
+  animation-fill-mode: forwards;
 }
 
 .nc-drawer {
@@ -372,11 +367,8 @@ video {
 .nc-toaster-pop {
   animation-duration: 800ms;
   animation-name: nc-toaster-pop;
+  animation-fill-mode: forwards;
   animation-iteration-count: 1;
-}
-
-.nc-toaster-popped {
-  transform: translateY(-45px);
 }
 
 @keyframes nc-toaster-push {
@@ -391,8 +383,8 @@ video {
 .nc-toaster-push {
   animation-duration: 300ms;
   animation-name: nc-toaster-push;
+  animation-fill-mode: forwards;
   animation-iteration-count: 1;
-  transform: translateY(0);
 }
 
 .nc-toast {
