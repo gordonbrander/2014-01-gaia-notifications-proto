@@ -268,9 +268,9 @@ add(NC, function (notification) {
   insertChild(ncDrawer, msg, 1);
 
   // Tally number of messages.
-  var notificationsCount = ncDrawer.querySelectorAll('.msg-message').length;
+  var newCount = ncDrawer.querySelectorAll('.msg-new').length;
 
-  var nNotifications = notificationsCount + " Notifications";
+  var nNotifications = newCount + " New";
 
   // Update notifications center header
   ncHeader.textContent = nNotifications;
@@ -282,10 +282,6 @@ add(NC, function (notification) {
   var toastMessage = cloneFirstChildOf('template-toast-sms');
   toastMessage.textContent = notification.message;
   ncToasterEl.appendChild(toastMessage);
-
-  var toastCount = cloneFirstChildOf('template-toast-count');
-  toastCount.textContent = nNotifications;
-  ncToasterEl.appendChild(toastCount);
 
   ncToasterEl.classList.remove('nc-toaster-push');
   ncToasterEl.classList.add('nc-toaster-pop');
