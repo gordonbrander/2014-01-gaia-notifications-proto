@@ -192,6 +192,7 @@ function sms2() {
 
 
 var sysBottomEdge = document.getElementById("sys-gesture-panel-bottom");
+var sysTopEdge = document.getElementById("sys-gesture-panel-top");
 var ncTabEl = document.getElementById("nc-tab");
 var ncDrawer = document.getElementById("nc-drawer");
 var ncToasterEl = document.getElementById("nc-toaster");
@@ -204,6 +205,7 @@ var templateToastCount = document.getElementById('template-toast-count');
 var touchmoves = on(window, 'touchmove');
 var animationends = on(window, 'animationend');
 var bottomEdgeTouchmoves = filter(touchmoves, withTarget(sysBottomEdge));
+var topEdgeTouchmoves = filter(touchmoves, withTarget(sysTopEdge));
 var ncTabAnimationends = filter(animationends, withAnimation(ncTabEl, 'nc-tab-pulse'));
 var ncToasterAnimationends = filter(animationends, withAnimation(ncToasterEl, 'nc-toaster-pop'));
 
@@ -247,4 +249,8 @@ add(ncToastAnimationends, function (event) {
 
 add(bottomEdgeTouchmoves, function (event) {
   ncDrawer.classList.add('nc-drawer-open');
+});
+
+add(topEdgeTouchmoves, function (event) {
+  ncDrawer.classList.remove('nc-drawer-open');
 });

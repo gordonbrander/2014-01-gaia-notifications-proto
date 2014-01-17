@@ -229,7 +229,7 @@ video {
   animation-fill-mode: forwards;
 }
 
-@keyframes nc-slide-up {
+@keyframes nc-slide {
   0% {
     transform: translateY(0);
   }
@@ -244,17 +244,15 @@ video {
   height: 480px;
   left: 0;
   position: absolute;
+  transition: transform 280ms ease-out;
   top: 480px;
   right: 0;
   z-index: 600;
 }
 
 .nc-drawer-open {
-  animation-duration: 280ms;
-  animation-name: nc-slide-up;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+  /* Slide up */
+  transform: translateY(-480px);
 }
 
 .nc-drawer-header {
