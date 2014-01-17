@@ -191,7 +191,9 @@ function sms2() {
 }
 
 
+var sysBottomEdge = document.getElementById("sys-gesture-panel-bottom");
 var ncTabEl = document.getElementById("nc-tab");
+var ncDrawer = document.getElementById("nc-drawer");
 var ncToasterEl = document.getElementById("nc-toaster");
 var ncToast1 = document.getElementById("nc-toast-0001");
 var ncToast2 = document.getElementById("nc-toast-0002");
@@ -199,8 +201,9 @@ var templateToastSmsTitle = document.getElementById('template-toast-sms-title');
 var templateToastSms = document.getElementById('template-toast-sms');
 var templateToastCount = document.getElementById('template-toast-count');
 
-var beginAnimation = on(window, 'click');
+var touchmoves = on(window, 'touchmove');
 var animationends = on(window, 'animationend');
+var bottomEdgeTouchmoves = filter(touchmoves, withTarget(sysBottomEdge));
 var ncTabAnimationends = filter(animationends, withAnimation(ncTabEl, 'nc-tab-pulse'));
 var ncToasterAnimationends = filter(animationends, withAnimation(ncToasterEl, 'nc-toaster-pop'));
 
@@ -208,6 +211,8 @@ var ncToasterAnimationends = filter(animationends, withAnimation(ncToasterEl, 'n
 var ncToastAnimationends = filter(animationends, function (event) {
   return event.target.classList.contains('nc-toast');
 });
+
+print(bottomEdgeTouchmoves);
 
 add(NC, function (notification) {
   var toastTitle = templateToastSmsTitle.cloneNode(true);
@@ -222,14 +227,12 @@ add(NC, function (notification) {
   toastCount.textContent = "12 Notifications";
   ncToasterEl.appendChild(toastCount);
 
-  // Vibrate after 1200ms, just before the toast pops.
-  setTimeout(vibrate, 1200, [150, 150, 150]);
-});
-
-add(NC, function () {
   ncToasterEl.classList.remove('nc-toaster-push');
   ncToasterEl.classList.add('nc-toaster-pop');
   ncTabEl.classList.add('nc-tab-pulse');
+
+  // Vibrate after 1200ms, just before the toast pops.
+  setTimeout(vibrate, 1200, [150, 150, 150]);
 });
 
 add(ncToasterAnimationends, function (event) {
@@ -242,4 +245,8 @@ add(ncToastAnimationends, function (event) {
     ncToasterEl.classList.add('nc-toaster-push');
     ncToasterEl.classList.remove('nc-toaster-pop');
   }
+});
+
+add(bottomEdgeTouchmoves, function (event) {
+  ncDrawer.classList.add('nc-drawer-open');
 });
