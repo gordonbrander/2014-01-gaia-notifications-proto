@@ -203,7 +203,7 @@ video {
   position: absolute;
   right: 0;
   width: 86px;
-  z-index: 200;
+  z-index: 600;
 }
 
 @keyframes nc-tab-pulse {
@@ -252,7 +252,7 @@ video {
   transition: transform 280ms ease-out;
   top: 480px;
   right: 0;
-  z-index: 600;
+  z-index: 602;
 }
 
 .nc-drawer-open {
