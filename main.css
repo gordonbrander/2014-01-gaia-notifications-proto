@@ -136,7 +136,7 @@ video {
   /* Contains absolute elements */
   position: absolute;
   width: 320px;
-  transition: height 150ms linear;
+  transition: height 200ms linear;
   right: 0;
   top: 0;
   z-index: 500;
@@ -247,13 +247,13 @@ video {
 .nc-drawer-open {
   /* Slide up/down after release */
   transform: translateY(-480px);
-  transition: transform 280ms ease-out;
+  transition: transform 200ms ease-out;
 }
 
 .nc-drawer-close {
   /* Slide up/down after release */
   transform: translateY(0);
-  transition: transform 280ms ease-out;
+  transition: transform 200ms ease-out;
 }
 
 .nc-drawer-header {
