@@ -88,12 +88,12 @@ function reductions(wire, next, initial) {
 }
 
 // Given an array of wires, "flatten" them into a single wire.
-function merge(wires) {
+function combine(/* wires */) {
   var c = [];
   function republishToC(v) {
     dispatch(c, v);
   }
-  reduceIndexed(wires, addTo, republishToC);
+  reduceIndexed(arguments, addTo, republishToC);
   return c;
 }
 
@@ -206,11 +206,21 @@ var ncTabEl = document.getElementById("nc-tab");
 var ncDrawer = document.getElementById("nc-drawer");
 var ncToasterEl = document.getElementById("nc-toaster");
 
+var touchstarts = on(window, 'touchstart');
 var touchmoves = on(window, 'touchmove');
+var touchends = on(window, 'touchend');
+var touchcancels = on(window, 'touchcancel');
+var touchstops = combine(touchends, touchcancels);
 var animationends = on(window, 'animationend');
 
-var bottomEdgeTouchmoves = filter(touchmoves, withTarget(sysBottomEdge));
-var topEdgeTouchmoves = filter(touchmoves, withTarget(sysTopEdge));
+var isTargetBottomEdge = withTarget(sysBottomEdge);
+var isTargetTopEdge = withTarget(sysTopEdge);
+
+var bottomEdgeTouchstarts = filter(touchstarts, isTargetBottomEdge);
+var bottomEdgeTouchmoves = filter(touchmoves, isTargetBottomEdge);
+var bottomEdgeTouchstops = filter(touchstops, isTargetBottomEdge);
+var topEdgeTouchmoves = filter(touchmoves, isTargetTopEdge);
+var topEdgeTouchstops = filter(touchstops, isTargetTopEdge);
 var ncTabAnimationends = filter(animationends, withAnimation(ncTabEl, 'nc-tab-pulse'));
 var ncToasterAnimationends = filter(animationends, withAnimation(ncToasterEl, 'nc-toaster-pop'));
 
@@ -258,10 +268,26 @@ add(ncToastAnimationends, function (event) {
 });
 
 add(bottomEdgeTouchmoves, function (event) {
+  ncDrawer.classList.remove('nc-drawer-close');
+  var touch = event.changedTouches[0];
+  var v = screen.height - touch.screenY;
+  ncDrawer.style.transform = 'translateY(-' + v + 'px)';
+});
+
+add(bottomEdgeTouchstops, function (event) {
   ncDrawer.classList.add('nc-drawer-open');
+  ncDrawer.style.transform = '';
   ncTabEl.classList.remove('nc-tab-pulse');
 });
 
 add(topEdgeTouchmoves, function (event) {
   ncDrawer.classList.remove('nc-drawer-open');
+  var touch = event.changedTouches[0];
+  var v = screen.height - touch.screenY;
+  ncDrawer.style.transform = 'translateY(-' + v + 'px)';
+});
+
+add(topEdgeTouchstops, function (event) {
+  ncDrawer.classList.add('nc-drawer-close');
+  ncDrawer.style.transform = '';
 });

@@ -122,7 +122,7 @@ video {
   height: 35px;
   position: absolute;
   width: 100%;
-  z-index: 1000;
+  z-index: 601;
 }
 
 #sys-gesture-panel-top {
@@ -249,15 +249,21 @@ video {
   height: 480px;
   left: 0;
   position: absolute;
-  transition: transform 280ms ease-out;
   top: 480px;
   right: 0;
   z-index: 602;
 }
 
 .nc-drawer-open {
-  /* Slide up */
+  /* Slide up/down after release */
   transform: translateY(-480px);
+  transition: transform 280ms ease-out;
+}
+
+.nc-drawer-close {
+  /* Slide up/down after release */
+  transform: translateY(0);
+  transition: transform 280ms ease-out;
 }
 
 .nc-drawer-header {
