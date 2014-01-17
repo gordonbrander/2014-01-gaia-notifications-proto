@@ -107,7 +107,12 @@ function asserts(wire, assert) {
   });
 }
 
+function id(thing) {
+  return thing;
+}
+
 function sample(wire, trigger, assemble) {
+  assemble = assemble || id;
   var sampled = null;
 
   add(wire, function (value) {
@@ -115,8 +120,18 @@ function sample(wire, trigger, assemble) {
     sampled = value;
   });
 
-  republish(trigger, function (b, v) {
+  return republish(trigger, function (b, v) {
     dispatch(b, assemble(sampled, v));
+  });
+}
+
+// Given a wire, create a new wire that represents the previous value of
+// `wire` whenever `wire` is updated.
+function previously(wire) {
+  var prev = null;
+  return republish(wire, function (b, curr) {
+    dispatch(b, prev);
+    prev = curr;
   });
 }
 
@@ -223,13 +238,18 @@ var bottomEdgeTouchstops = filter(touchstops, isTargetBottomEdge);
 var topEdgeTouchmoves = filter(touchmoves, isTargetTopEdge);
 var topEdgeTouchstops = filter(touchstops, isTargetTopEdge);
 var yEdgeTouchmoves = combine(bottomEdgeTouchmoves, topEdgeTouchmoves);
-// Contains moves and stops.
-var yEdgeTouches = combine(
-  bottomEdgeTouchstops,
-  topEdgeTouchstops,
-  topEdgeTouchmoves,
-  bottomEdgeTouchmoves
-);
+var yEdgePrevTouchmoves = previously(yEdgeTouchmoves);
+var yEdgeTouchstops = combine(bottomEdgeTouchstops, topEdgeTouchstops);
+var yEdgeSwipeVel = sample(yEdgePrevTouchmoves, yEdgeTouchmoves, function (prev, curr) {
+  if (prev === null) return 0;
+  return curr.changedTouches[0].screenY - prev.changedTouches[0].screenY;
+});
+// Deduce swipe direction at touchend.
+var yEdgeSwipeEndYVel = sample(yEdgeSwipeVel, yEdgeTouchstops);
+var yEdgeSwipeMoveYCoord = map(yEdgeTouchmoves, function (event) {
+  return screen.height - event.changedTouches[0].screenY;
+});
+
 var ncTabAnimationends = filter(animationends, withAnimation(ncTabEl, 'nc-tab-pulse'));
 var ncToasterAnimationends = filter(animationends, withAnimation(ncToasterEl, 'nc-toaster-pop'));
 
@@ -276,27 +296,16 @@ add(ncToastAnimationends, function (event) {
   }
 });
 
-add(bottomEdgeTouchmoves, function (event) {
+add(yEdgeSwipeMoveYCoord, function (y) {
+  ncDrawer.classList.remove('nc-drawer-open');
   ncDrawer.classList.remove('nc-drawer-close');
-  var touch = event.changedTouches[0];
-  var v = screen.height - touch.screenY;
-  ncDrawer.style.transform = 'translateY(-' + v + 'px)';
+  ncDrawer.style.transform = 'translateY(-' + y + 'px)';
 });
 
-add(bottomEdgeTouchstops, function (event) {
-  ncDrawer.classList.add('nc-drawer-open');
+add(yEdgeSwipeEndYVel, function (vel) {
+  var classname = vel >= 0 ? 'nc-drawer-close' : 'nc-drawer-open';
+  ncDrawer.classList.add(classname);
   ncDrawer.style.transform = '';
   ncTabEl.classList.remove('nc-tab-pulse');
 });
 
-add(topEdgeTouchmoves, function (event) {
-  ncDrawer.classList.remove('nc-drawer-open');
-  var touch = event.changedTouches[0];
-  var v = screen.height - touch.screenY;
-  ncDrawer.style.transform = 'translateY(-' + v + 'px)';
-});
-
-add(topEdgeTouchstops, function (event) {
-  ncDrawer.classList.add('nc-drawer-close');
-  ncDrawer.style.transform = '';
-});
