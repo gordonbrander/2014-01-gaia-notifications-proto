@@ -261,6 +261,20 @@ var ncToastAnimationends = filter(animationends, function (event) {
 });
 
 add(NC, function (notification) {
+  // Add new message to drawer.
+  var msg = cloneFirstChildOf('template-msg-sms');
+  msg.querySelector('.msg-title').textContent = notification.title;
+  msg.querySelector('.msg-content').textContent = notification.message;
+  insertChild(ncDrawer, msg, 1);
+
+  // Tally number of messages.
+  var notificationsCount = ncDrawer.querySelectorAll('.msg-message').length;
+
+  var nNotifications = notificationsCount + " Notifications";
+
+  // Update notifications center header
+  ncHeader.textContent = nNotifications;
+
   var toastTitle = cloneFirstChildOf('template-toast-sms-title');
   toastTitle.textContent = notification.title;
   ncToasterEl.appendChild(toastTitle);
@@ -270,13 +284,8 @@ add(NC, function (notification) {
   ncToasterEl.appendChild(toastMessage);
 
   var toastCount = cloneFirstChildOf('template-toast-count');
-  toastCount.textContent = "12 Notifications";
+  toastCount.textContent = nNotifications;
   ncToasterEl.appendChild(toastCount);
-
-  var msg = cloneFirstChildOf('template-msg-sms');
-  msg.querySelector('.msg-title').textContent = notification.title;
-  msg.querySelector('.msg-content').textContent = notification.message;
-  insertChild(ncDrawer, msg, 1);
 
   ncToasterEl.classList.remove('nc-toaster-push');
   ncToasterEl.classList.add('nc-toaster-pop');
