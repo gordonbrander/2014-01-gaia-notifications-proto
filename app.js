@@ -41,9 +41,11 @@ function remove(a, v) {
   return a;
 }
 
-// Just add with reverse argument order for convenient reduction.
+// Just add with reverse argument order and return of value,
+// for convenient reduction.
 function addTo(v, a) {
-  return add(a, v);
+  add(a, v);
+  return v;
 }
 
 // Creates a new wire `b`. Whenever a new value is dispatched to `a`, callback
@@ -216,11 +218,18 @@ var animationends = on(window, 'animationend');
 var isTargetBottomEdge = withTarget(sysBottomEdge);
 var isTargetTopEdge = withTarget(sysTopEdge);
 
-var bottomEdgeTouchstarts = filter(touchstarts, isTargetBottomEdge);
 var bottomEdgeTouchmoves = filter(touchmoves, isTargetBottomEdge);
 var bottomEdgeTouchstops = filter(touchstops, isTargetBottomEdge);
 var topEdgeTouchmoves = filter(touchmoves, isTargetTopEdge);
 var topEdgeTouchstops = filter(touchstops, isTargetTopEdge);
+var yEdgeTouchmoves = combine(bottomEdgeTouchmoves, topEdgeTouchmoves);
+// Contains moves and stops.
+var yEdgeTouches = combine(
+  bottomEdgeTouchstops,
+  topEdgeTouchstops,
+  topEdgeTouchmoves,
+  bottomEdgeTouchmoves
+);
 var ncTabAnimationends = filter(animationends, withAnimation(ncTabEl, 'nc-tab-pulse'));
 var ncToasterAnimationends = filter(animationends, withAnimation(ncToasterEl, 'nc-toaster-pop'));
 
