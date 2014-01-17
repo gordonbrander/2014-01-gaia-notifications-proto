@@ -120,36 +120,6 @@ video {
   z-index: 1000;
 }
 
-/* Use with .ir */
-.sys-fake-keyboard {
-  background-image: url(keyboard.png);
-  background-size: 320px auto;
-  bottom: 0;
-  height: 205px;
-  left: 0;
-  position: absolute;
-  transition: transform 200ms ease-out;
-  transform: translateY(205px);
-  width: 320px;
-  z-index: 999;
-}
-.js-ready .sys-fake-keyboard {
-  display: block;
-}
-.sys-fake-keyboard.js-activated {
-  transform: translateY(0);
-}
-
-/* General class for overlays */
-.sys-overlay {
-  background: rgba(0, 0, 0, .5);
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
 /* RocketBar .rb-
 ----------------------------------------------------------------------------- */
 
@@ -164,7 +134,7 @@ video {
   transition: height 200ms linear;
   right: 0;
   top: 0;
-  z-index: 501;
+  z-index: 500;
 }
 
 .rb-input {
@@ -191,41 +161,6 @@ video {
   width: 106px;
 }
 
-.rb-rocketbar.js-expanded .rb-icons,
-.rb-clear {
-  display: none;
-}
-
-.rb-cancel {
-  height: 50px;
-  line-height: 50px;
-  position: absolute;
-  right: 5px;
-}
-
-#rb-overlay {
-  z-index: 500;
-}
-
-/* Settings drawer .set-
------------------------------------------------------------------------------ */
-
-/* Use with .ir */
-.set-settings {
-  background-image: url(settings-drawer.png);
-  background-size: 320px auto;
-  height: 389px;
-  left: 0;
-  position: absolute;
-  top: 20px;
-  width: 320px;
-  z-index: 400;
-}
-
-#set-overlay {
-  z-index: 399;
-}
-
 /* Launcher homescreen .hs-
 ----------------------------------------------------------------------------- */
 
@@ -238,60 +173,7 @@ video {
   z-index: 1;
 }
 
-/* Task manager .tm-
------------------------------------------------------------------------------ */
-
-.tm-task-manager {
-  background: #484848;
-  height: 460px;
-  /* We have to give task manager perspective because as an absolute element
-  with z-index, it has a new stacking context 
-  See: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context */
-  perspective: 100px;
-  position: absolute;
-  top: 20px;
-  width: 320px;
-  z-index: 200;
-}
-
-/* Sheets .sh-
------------------------------------------------------------------------------ */
-
-.sh-sheet {
-  height: 460px;
-  position: absolute;
-  top: 0;
-  transition: transform 200ms linear;
-  width: 320px;
-  z-index: 300;
-}
-
-.sh-frame {
-  height: 460px;
-  overflow: auto;
-  width: 320px;
-}
-
-.sh-scaled {
-  transform: translateZ(-40px);
-}
-
-/* Transparent cover over sheet that is hidden when zoomed in. */
-.sh-cover {
-  display: none;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-/* Cover sheet when scaled (task manager mode). */
-.sh-scaled > .sh-cover {
-  display: block;
-}
-
-/* nc-notifications .not-
+/* .nc- Notification Center
 ----------------------------------------------------------------------------- */
 
 /* The small nubbin that glows at the bottom */
@@ -340,6 +222,10 @@ video {
 .nc-drawer {
   background: #009cb8;
   color: #fff;
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: 600;
 }
 
 .nc-toaster {
@@ -349,7 +235,7 @@ video {
   left: 0;
   position: absolute;
   right: 0;
-  z-index: 200;
+  z-index: 601;
 }
 
 @keyframes nc-toaster-pop {
@@ -434,5 +320,17 @@ video {
   animation-duration: 2000ms;
   animation-name: nc-fade-in-out;
   animation-iteration-count: 1;
+}
+
+/* msg- Individual notifications in center
+----------------------------------------------------------------------------- */
+
+.msg-message {
+  background: #00aac5;
+  border-bottom: #1bb3cb;
+}
+
+.msg-new {
+  background: #009cb8;
 }
 

@@ -137,6 +137,10 @@ function on(element, name, useCapture) {
   return wire;
 }
 
+function vibrate(ms) {
+  if (navigator.vibrate) navigator.vibrate(ms);
+}
+
 function withTarget(element) {
   function isElementTarget(event) {
     return event.target === element;
@@ -166,10 +170,24 @@ function toastNext_(toastEls) {
   return toastEl;
 }
 
+var NC = [];
+
+function sms1() {
+  // We disptach this as 2 messages due to the way we're handling
+  // fade in/out as seperate toasts.
+  dispatch(NC, {
+    title: 'Will Grand',
+    message: "Let's go out for lunch tomorrow"
+  });
+}
+
 var ncTabEl = document.getElementById("nc-tab");
 var ncToasterEl = document.getElementById("nc-toaster");
 var ncToast1 = document.getElementById("nc-toast-0001");
 var ncToast2 = document.getElementById("nc-toast-0002");
+var templateToastSmsTitle = document.getElementById('template-toast-sms-title');
+var templateToastSms = document.getElementById('template-toast-sms');
+var templateToastCount = document.getElementById('template-toast-count');
 
 var beginAnimation = on(window, 'click');
 var animationends = on(window, 'animationend');
@@ -181,7 +199,24 @@ var ncToastAnimationends = filter(animationends, function (event) {
   return event.target.classList.contains('nc-toast');
 });
 
-add(beginAnimation, function () {
+add(NC, function (notification) {
+  var toastTitle = templateToastSmsTitle.cloneNode(true);
+  toastTitle.textContent = notification.title;
+  ncToasterEl.appendChild(toastTitle);
+
+  var toastMessage = templateToastSms.cloneNode(true);
+  toastMessage.textContent = notification.message;
+  ncToasterEl.appendChild(toastMessage);
+
+  var toastCount = templateToastCount.cloneNode(true);
+  toastCount.textContent = "12 Notifications";
+  ncToasterEl.appendChild(toastCount);
+
+  // Vibrate after 1200ms, just before the toast pops.
+  setTimeout(vibrate, 1200, [150, 150, 150]);
+});
+
+add(NC, function () {
   ncToasterEl.classList.remove('nc-toaster-push');
   ncToasterEl.classList.add('nc-toaster-pop');
   ncTabEl.classList.add('nc-tab-pulse');
