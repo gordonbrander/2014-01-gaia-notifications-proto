@@ -292,7 +292,7 @@ add(NC, function (notification) {
   ncTabEl.classList.add('nc-tab-pulse');
 
   // Vibrate after 1200ms, just before the toast pops.
-  setTimeout(vibrate, 1200, [150, 150, 150]);
+  setTimeout(vibrate, 1200, [300, 200, 300]);
 });
 
 add(ncToasterAnimationends, function (event) {
