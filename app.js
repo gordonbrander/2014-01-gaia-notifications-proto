@@ -212,8 +212,6 @@ var ncToastAnimationends = filter(animationends, function (event) {
   return event.target.classList.contains('nc-toast');
 });
 
-print(bottomEdgeTouchmoves);
-
 add(NC, function (notification) {
   var toastTitle = templateToastSmsTitle.cloneNode(true);
   toastTitle.textContent = notification.title;
