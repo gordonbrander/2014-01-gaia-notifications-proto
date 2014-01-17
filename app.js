@@ -157,7 +157,6 @@ function withAnimation(target, animationName) {
 
 function cloneFirstChildOf(id) {
   var tpl = document.getElementById(id);
-  console.log(tpl);
   return tpl.firstElementChild.cloneNode(true);
 }
 
