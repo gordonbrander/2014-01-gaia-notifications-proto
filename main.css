@@ -110,7 +110,7 @@ video {
   width: 320px;
 }
 
-/* Hot area for bottom swipes */
+/* Hot areas for swipes */
 #sys-gesture-panel-bottom {
   border-radius: 50% 50% 0 0;
   bottom: 0;
@@ -119,6 +119,16 @@ video {
   width: 100%;
   z-index: 1000;
 }
+
+#sys-gesture-panel-top {
+  border-radius: 50% 50% 0 0;
+  top: 0;
+  height: 35px;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+
 
 /* RocketBar .rb-
 ----------------------------------------------------------------------------- */
@@ -219,14 +229,32 @@ video {
   animation-fill-mode: forwards;
 }
 
+@keyframes nc-slide-up {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-480px);
+  }
+}
+
 .nc-drawer {
   background: #009cb8;
-  bottom: 0;
   color: #fff;
+  height: 480px;
   left: 0;
   position: absolute;
+  top: 480px;
   right: 0;
   z-index: 600;
+}
+
+.nc-drawer-open {
+  animation-duration: 280ms;
+  animation-name: nc-slide-up;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 
 .nc-drawer-header {
@@ -239,7 +267,7 @@ video {
 
 .nc-toaster {
   background: #008eab;
-  bottom: -50px;
+  top: 480px;
   height: 50px;
   left: 0;
   position: absolute;
