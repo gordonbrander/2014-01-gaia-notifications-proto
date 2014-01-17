@@ -155,6 +155,17 @@ function withAnimation(target, animationName) {
   return isEventForAnimation;
 }
 
+function cloneFirstChildOf(id) {
+  var tpl = document.getElementById(id);
+  console.log(tpl);
+  return tpl.firstElementChild.cloneNode(true);
+}
+
+function insertChild(parent, el, index) {
+  parent.insertBefore(el, parent.childNodes[index + 1]);
+  return parent;
+}
+
 function getFirstWithoutClass(elements, c) {
   for (var i = 0; i < elements.length; i += 1)
     if (!elements[i].classList.contains(c)) return elements[i];
@@ -195,9 +206,6 @@ var sysTopEdge = document.getElementById("sys-gesture-panel-top");
 var ncTabEl = document.getElementById("nc-tab");
 var ncDrawer = document.getElementById("nc-drawer");
 var ncToasterEl = document.getElementById("nc-toaster");
-var templateToastSmsTitle = document.getElementById('template-toast-sms-title');
-var templateToastSms = document.getElementById('template-toast-sms');
-var templateToastCount = document.getElementById('template-toast-count');
 
 var touchmoves = on(window, 'touchmove');
 var animationends = on(window, 'animationend');
@@ -213,17 +221,22 @@ var ncToastAnimationends = filter(animationends, function (event) {
 });
 
 add(NC, function (notification) {
-  var toastTitle = templateToastSmsTitle.cloneNode(true);
+  var toastTitle = cloneFirstChildOf('template-toast-sms-title');
   toastTitle.textContent = notification.title;
   ncToasterEl.appendChild(toastTitle);
 
-  var toastMessage = templateToastSms.cloneNode(true);
+  var toastMessage = cloneFirstChildOf('template-toast-sms');
   toastMessage.textContent = notification.message;
   ncToasterEl.appendChild(toastMessage);
 
-  var toastCount = templateToastCount.cloneNode(true);
+  var toastCount = cloneFirstChildOf('template-toast-count');
   toastCount.textContent = "12 Notifications";
   ncToasterEl.appendChild(toastCount);
+
+  var msg = cloneFirstChildOf('template-msg-sms');
+  msg.querySelector('.msg-title').textContent = notification.title;
+  msg.querySelector('.msg-content').textContent = notification.message;
+  insertChild(ncDrawer, msg, 1);
 
   ncToasterEl.classList.remove('nc-toaster-push');
   ncToasterEl.classList.add('nc-toaster-pop');
