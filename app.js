@@ -221,6 +221,7 @@ var sysBottomEdge = document.getElementById("sys-gesture-panel-bottom");
 var sysTopEdge = document.getElementById("sys-gesture-panel-top");
 var ncTabEl = document.getElementById("nc-tab");
 var ncDrawer = document.getElementById("nc-drawer");
+var ncHeader = document.getElementById('nc-drawer-header');
 var ncToasterEl = document.getElementById("nc-toaster");
 
 var touchstarts = on(window, 'touchstart');
@@ -232,14 +233,15 @@ var animationends = on(window, 'animationend');
 
 var isTargetBottomEdge = withTarget(sysBottomEdge);
 var isTargetTopEdge = withTarget(sysTopEdge);
+var isTargetNcHeader = withTarget(ncHeader);
 
 var bottomEdgeTouchmoves = filter(touchmoves, isTargetBottomEdge);
 var bottomEdgeTouchstops = filter(touchstops, isTargetBottomEdge);
-var topEdgeTouchmoves = filter(touchmoves, isTargetTopEdge);
-var topEdgeTouchstops = filter(touchstops, isTargetTopEdge);
-var yEdgeTouchmoves = combine(bottomEdgeTouchmoves, topEdgeTouchmoves);
+var ncHeaderTouchmoves = filter(touchmoves, isTargetNcHeader);
+var ncHeaderTouchstops = filter(touchstops, isTargetNcHeader);
+var yEdgeTouchmoves = combine(bottomEdgeTouchmoves, ncHeaderTouchmoves);
 var yEdgePrevTouchmoves = previously(yEdgeTouchmoves);
-var yEdgeTouchstops = combine(bottomEdgeTouchstops, topEdgeTouchstops);
+var yEdgeTouchstops = combine(bottomEdgeTouchstops, ncHeaderTouchstops);
 var yEdgeSwipeVel = sample(yEdgePrevTouchmoves, yEdgeTouchmoves, function (prev, curr) {
   if (prev === null) return 0;
   return curr.changedTouches[0].screenY - prev.changedTouches[0].screenY;

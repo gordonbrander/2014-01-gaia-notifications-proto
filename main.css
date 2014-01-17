@@ -125,16 +125,6 @@ video {
   z-index: 601;
 }
 
-#sys-gesture-panel-top {
-  border-radius: 50% 50% 0 0;
-  top: 0;
-  height: 35px;
-  position: absolute;
-  width: 100%;
-  z-index: 1000;
-}
-
-
 /* RocketBar .rb-
 ----------------------------------------------------------------------------- */
 
