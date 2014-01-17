@@ -305,7 +305,8 @@ add(yEdgeSwipeMoveYCoord, function (y) {
 });
 
 add(yEdgeSwipeEndYVel, function (vel) {
-  var classname = vel >= 0 ? 'nc-drawer-close' : 'nc-drawer-open';
+  // Favor opening over closing, just slightly.
+  var classname = vel < 2 ? 'nc-drawer-open' : 'nc-drawer-close';
   ncDrawer.classList.add(classname);
   ncDrawer.style.transform = '';
   ncTabEl.classList.remove('nc-tab-pulse');
