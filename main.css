@@ -221,11 +221,20 @@ video {
 
 .nc-drawer {
   background: #009cb8;
+  bottom: 0;
   color: #fff;
   left: 0;
   position: absolute;
   right: 0;
   z-index: 600;
+}
+
+.nc-drawer-header {
+  background: #008eab url(toast-nc.png) 16px 10px no-repeat;
+  font-size: 18.33px;
+  height: 23px;
+  line-height: 23px;
+  padding: 12px 10px 10px 54px;
 }
 
 .nc-toaster {
@@ -283,7 +292,7 @@ video {
   line-height: 23px;
   /* Toasts start and end at opacity 0 */
   opacity: 0;
-  padding: 12px 10px 10px 56px;
+  padding: 12px 10px 10px 54px;
   position: absolute;
   right: 0;
 }
@@ -327,10 +336,48 @@ video {
 
 .msg-message {
   background: #00aac5;
-  border-bottom: #1bb3cb;
+  border-bottom: 1px solid #1bb3cb;
+  padding: 15px 15px 15px 55px;
+}
+
+.msg-sms {
+  background: #00aac5 url(toast-sms.png) 16px 20px no-repeat;
+}
+
+.msg-phone {
+  background: #00aac5 url(toast-phone.png) 16px 20px no-repeat;
+}
+
+.msg-facebook {
+  background: #00aac5 url(toast-facebook.png) 16px 20px no-repeat;
+}
+
+.msg-pinterest {
+  background: #00aac5 url(toast-pinterest.png) 16px 20px no-repeat;
 }
 
 .msg-new {
-  background: #009cb8;
+  background-color: #009cb8;
+  border-bottom-color: #1ba7c0;
 }
 
+.msg-title {
+  font-size: 18.33px;
+  font-weight: normal;
+  line-height: 20px;
+  margin: 0;
+}
+
+.msg-content {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13.75px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.msg-time {
+  color: rgba(255, 255, 255, 0.7);
+  float: right;
+  font-size: 13.75px;
+  line-height: 20px;
+}

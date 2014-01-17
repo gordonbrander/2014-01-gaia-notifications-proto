@@ -177,9 +177,19 @@ function sms1() {
   // fade in/out as seperate toasts.
   dispatch(NC, {
     title: 'Will Grand',
-    message: "Let's go out for lunch tomorrow"
+    message: "Still up for lunch tomorrow?"
   });
 }
+
+function sms2() {
+  // We disptach this as 2 messages due to the way we're handling
+  // fade in/out as seperate toasts.
+  dispatch(NC, {
+    title: 'Alice Smith',
+    message: "Bob's going away party at office Fri"
+  });
+}
+
 
 var ncTabEl = document.getElementById("nc-tab");
 var ncToasterEl = document.getElementById("nc-toaster");
