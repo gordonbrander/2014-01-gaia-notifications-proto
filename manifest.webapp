@@ -5,7 +5,7 @@
       "name": "Mozilla",
       "url": "https://github.com/gordonbrander/"
     },
-    "launch_path": "/",
+    "launch_path": "/2014-01-gaia-notifications-proto/",
     "fullscreen": "true",
     "orientation": ["portrait"]
 }
